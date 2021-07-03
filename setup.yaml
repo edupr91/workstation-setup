@@ -20,6 +20,7 @@
           - unzip
           - wget
           - gnome-tweaks
+          - terminator
     - name: Add Sublime repository
       yum_repository:
         name: sublime-text
