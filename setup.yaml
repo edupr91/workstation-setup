@@ -1,0 +1,46 @@
+---
+- name: Packages
+  hosts: workstations
+  become: yes
+  tasks:
+    - name: Upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+    - name: Ensure basic packages
+      package:
+        name: '{{item}}'
+        state: latest
+      loop:
+          - git
+          - htop
+          - NetworkManager-openvpn
+          - NetworkManager-openvpn-gnome
+          - p7zip
+          - unzip
+          - wget
+          - gnome-tweaks
+    - name: Add Sublime repository
+      yum_repository:
+        name: sublime-text
+        description: Sublime Text x86_64 - stable
+        baseurl: https://download.sublimetext.com/rpm/stable/x86_64
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+    - name: Add Google chrome Repository
+      yum_repository:
+        name: google-chrome-stable
+        description: Google Chrome Stable x86_64 - stable
+        baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://dl.google.com/linux/linux_signing_key.pub
+    - name: Add Extra packages
+      package:
+        name: '{{item}}'
+        state: present
+      loop:
+        - sublime-text
+        - google-chrome-stable
+
