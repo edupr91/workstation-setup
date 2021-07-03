@@ -23,38 +23,39 @@
           - terminator
           - transmission
           - libreoffice-base
-    - name: Add Sublime repository
+    - name: Add Extra Repositories
       yum_repository:
-        name: sublime-text
-        description: Sublime Text x86_64 - stable
-        baseurl: https://download.sublimetext.com/rpm/stable/x86_64
-        enabled: yes
-        gpgcheck: yes
-        gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
-    - name: Add Google chrome Repository
-      yum_repository:
-        name: google-chrome-stable
-        description: Google Chrome Stable x86_64 - stable
-        baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
-        enabled: yes
-        gpgcheck: yes
-        gpgkey: https://dl.google.com/linux/linux_signing_key.pub
-    - name: Add KeeWeb Repository
-      yum_repository:
-        name: KeeWeb
-        description: KeeWeb x86_64
-        baseurl: https://download.copr.fedorainfracloud.org/results/jclay/KeeWeb/epel-8-x86_64
-        enabled: yes
-        gpgcheck: yes
-        gpgkey: https://download.copr.fedorainfracloud.org/results/jclay/KeeWeb/pubkey.gpg
-    - name: Add AnyDesk Repository
-      yum_repository:
-        name: AnyDesk
-        description: AnyDesk x86_64
-        baseurl: http://rpm.anydesk.com/rhel/8/x86_64
-        enabled: yes
-        gpgcheck: yes
-        gpgkey: https://keys.anydesk.com/repos/RPM-GPG-KEY
+        name: '{{item.name}}'
+        description: '{{item.description}}'
+        baseurl: '{{item.baseurl}}'
+        enabled: '{{item.enabled}}'
+        gpgcheck: '{{item.gpgcheck}}'
+        gpgkey: '{{item.gpgkey}}'
+      loop:
+        - name: Sublime Text
+          description: Sublime Text x86_64 - stable
+          baseurl: https://download.sublimetext.com/rpm/stable/x86_64
+          enabled: yes
+          gpgcheck: yes
+          gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
+        - name: google-chrome-stable
+          description: Google Chrome Stable x86_64 - stable
+          baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
+          enabled: yes
+          gpgcheck: yes
+          gpgkey: https://dl.google.com/linux/linux_signing_key.pub
+        - name: KeeWeb
+          description: KeeWeb x86_64
+          baseurl: https://download.copr.fedorainfracloud.org/results/jclay/KeeWeb/epel-8-x86_64
+          enabled: yes
+          gpgcheck: yes
+          gpgkey: https://download.copr.fedorainfracloud.org/results/jclay/KeeWeb/pubkey.gpg
+        - name: AnyDesk
+          description: AnyDesk x86_64
+          baseurl: http://rpm.anydesk.com/rhel/8/x86_64
+          enabled: yes
+          gpgcheck: yes
+          gpgkey: https://keys.anydesk.com/repos/RPM-GPG-KEY
     - name: Add Extra packages
       package:
         name: '{{item}}'
