@@ -1,9 +1,11 @@
 ---
 - name: Upgrade all packages
+  become: yes
   yum:
     name: '*'
     state: latest
 - name: Ensure basic packages
+  become: yes
   package:
     name: '{{item}}'
     state: latest
@@ -20,7 +22,9 @@
       - transmission
       - libreoffice-base
       - gparted
+      - icedtea-web
 - name: Add Extra Repositories
+  become: yes
   yum_repository:
     name: '{{item.name}}'
     description: '{{item.description}}'
@@ -51,6 +55,7 @@
       gpgkey: https://repo.skype.com/data/SKYPE-GPG-KEY
 
 - name: Add Extra packages
+  become: yes
   package:
     name: '{{item}}'
     state: present
@@ -61,10 +66,12 @@
     - anydesk
     - skypeforlinux
 - name: Get Jetbrains Toolbox Installer
+  become: yes
   get_url:
     url: https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh
     dest: /tmp/jetbrains-toolbox.sh
 - name: Install Jenbrains Toolbox
+  become: yes
   ansible.builtin.shell: 'sh /tmp/jetbrains-toolbox.sh'
   args:
     creates: /usr/local/bin/jetbrains-toolbox
@@ -85,6 +92,39 @@
    - org.videolan.VLC
    - com.spotify.Client
 - name: Install Rambox
+  become: yes
   yum:
     name: https://github.com/ramboxapp/community-edition/releases/download/0.7.7/Rambox-0.7.7-linux-x86_64.rpm
     disable_gpg_check: yes
+- name: Create terminator conf dir
+  file:
+    path: ~/.config/terminator
+    state: directory
+    mode: '0755'
+- name: Copy terminator config
+  copy:
+    src: terminator.config
+    dest: ~/.config/terminator/config
+    mode: '0644'
+- name: Create ssh dir
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: '0755'
+- name: Copy user shh config
+  copy:
+    src: ssh/config
+    dest: ~/.ssh/config
+    mode: '0600'
+- name: Copy bashrc
+  copy:
+    src: bash/bashrc
+    dest: ~/.bashrc
+    mode: '0644'
+- name: Copy bash_profile
+  copy:
+    src: bash/bash_profile
+    dest: ~/.bash_profile
+    mode: '0644'
+
+
