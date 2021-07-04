@@ -19,6 +19,7 @@
       - terminator
       - transmission
       - libreoffice-base
+      - gparted
 - name: Add Extra Repositories
   yum_repository:
     name: '{{item.name}}'
@@ -67,3 +68,23 @@
   ansible.builtin.shell: 'sh /tmp/jetbrains-toolbox.sh'
   args:
     creates: /usr/local/bin/jetbrains-toolbox
+- name: Add flathub flatpak repository remote
+  become: no
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+- name: Install Flathub apps
+  become: no
+  community.general.flatpak:
+    name: '{{item}}'
+    state: present
+    method: user
+  loop:
+   - org.videolan.VLC
+   - com.spotify.Client
+- name: Install Rambox
+  yum:
+    name: https://github.com/ramboxapp/community-edition/releases/download/0.7.7/Rambox-0.7.7-linux-x86_64.rpm
+    disable_gpg_check: yes
