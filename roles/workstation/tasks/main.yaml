@@ -34,8 +34,8 @@
     gpgcheck: yes
     gpgkey: '{{item.gpgkey}}'
   loop:
-    - name: Sublime Text
-      description: Sublime Text x86_64 - stable
+    - name: sublime-ext
+      description: sublime-text-stable
       baseurl: https://download.sublimetext.com/rpm/stable/x86_64
       gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
     - name: google-chrome-stable
