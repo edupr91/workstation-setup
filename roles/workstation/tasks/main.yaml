@@ -31,6 +31,8 @@
       - perl
       - kernel-devel
       - elfutils-libelf-devel
+# Prompt fonts
+      - powerline-fonts
 - name: Add Extra Repositories
   become: yes
   yum_repository:
@@ -123,6 +125,7 @@
     src: terminator.config
     dest: ~/.config/terminator/config
     mode: '0644'
+    force: no
 - name: Create ssh dir
   file:
     path: ~/.ssh
@@ -138,10 +141,29 @@
     src: bash/bashrc
     dest: ~/.bashrc
     mode: '0644'
+    force: no
 - name: Copy bash_profile
   copy:
     src: bash/bash_profile
     dest: ~/.bash_profile
     mode: '0644'
-
+    force: no
+- name: Install pip libraries
+  pip:
+    name: '{{item.name}}'
+    executable: '{{item.pip_executable}}'
+    extra_args: '--user'
+  loop:
+# fpasswd
+    - name: 'pykeepass'
+      pip_executable: 'pip3'
+    - name: 'PyInquirer'
+      pip_executable: 'pip3'
+    - name: 'pyperclip'
+      pip_executable: 'pip3'
+    - name: 'termcolor'
+      pip_executable: 'pip3'
+#  Fancy prompt
+    - name: 'powerline-shell'
+      pip_executable: 'pip3'
 
