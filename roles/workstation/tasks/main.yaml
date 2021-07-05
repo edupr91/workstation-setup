@@ -23,6 +23,7 @@
       - libreoffice-base
       - gparted
       - icedtea-web
+      - xclip
 - name: Add Extra Repositories
   become: yes
   yum_repository:
