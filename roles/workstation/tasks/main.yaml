@@ -23,7 +23,14 @@
       - libreoffice-base
       - gparted
       - icedtea-web
+# fpassword
       - xclip
+# VirtualBox
+      - gcc
+      - make
+      - perl
+      - kernel-devel
+      - elfutils-libelf-devel
 - name: Add Extra Repositories
   become: yes
   yum_repository:
@@ -34,7 +41,7 @@
     gpgcheck: yes
     gpgkey: '{{item.gpgkey}}'
   loop:
-    - name: sublime-ext
+    - name: sublime-text
       description: sublime-text-stable
       baseurl: https://download.sublimetext.com/rpm/stable/x86_64
       gpgkey: https://download.sublimetext.com/sublimehq-rpm-pub.gpg
@@ -54,7 +61,10 @@
       description: Skype - stable
       baseurl: https://repo.skype.com/rpm/stable/
       gpgkey: https://repo.skype.com/data/SKYPE-GPG-KEY
-
+    - name: Hashicorp-Stable
+      description: Hashicorp Stable - x86_64
+      baseurl: https://rpm.releases.hashicorp.com/RHEL/8/x86_64/stable
+      gpgkey: https://rpm.releases.hashicorp.com/gpg
 - name: Add Extra packages
   become: yes
   package:
@@ -66,6 +76,7 @@
     - KeeWeb
     - anydesk
     - skypeforlinux
+    - vagrant
 - name: Get Jetbrains Toolbox Installer
   become: yes
   get_url:
@@ -92,10 +103,15 @@
   loop:
    - org.videolan.VLC
    - com.spotify.Client
-- name: Install Rambox
+- name: Install rambox
   become: yes
   yum:
-    name: https://github.com/ramboxapp/community-edition/releases/download/0.7.7/Rambox-0.7.7-linux-x86_64.rpm
+    name: https://github.com/ramboxapp/community-edition/releases/download/0.7.7/rambox-0.7.7-linux-x86_64.rpm
+    disable_gpg_check: yes
+- name: Install VirtualBox
+  become: yes
+  yum:
+    name: https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1-6.1.22_144080_el8-1.x86_64.rpm
     disable_gpg_check: yes
 - name: Create terminator conf dir
   file:
