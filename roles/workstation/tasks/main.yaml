@@ -23,6 +23,10 @@
       - libreoffice-base
       - gparted
       - icedtea-web
+      - npm
+      - libreoffice-draw.x86_64
+      - whois
+      - syslinux
 # fpassword
       - xclip
 # VirtualBox
@@ -166,4 +170,6 @@
 #  Fancy prompt
     - name: 'powerline-shell'
       pip_executable: 'pip3'
-
+# Custom python script
+    - name: 'dnspython'
+      pip_executable: 'pip3'
