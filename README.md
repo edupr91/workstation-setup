@@ -1,6 +1,7 @@
 # Workstation setup
-
 Documentation work in progress
+
+First run pre-setup.sh 
 
 ```
 ansible-galaxy collection install community.general
