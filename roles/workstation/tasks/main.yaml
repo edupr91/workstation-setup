@@ -4,29 +4,38 @@
   yum:
     name: '*'
     state: latest
+- name: Remove unnessary packages
+  become: yes
+  package:
+    name: '{{item}}'
+    state: absent
+  loop:
+      - evolution
 - name: Ensure basic packages
   become: yes
   package:
     name: '{{item}}'
     state: latest
   loop:
-      - git
-      - htop
       - NetworkManager-openvpn
       - NetworkManager-openvpn-gnome
-      - p7zip
-      - unzip
-      - wget
+      - git
       - gnome-tweaks
+      - gparted
+      - htop
+      - icedtea-web
+      - libreoffice-base
+      - libreoffice-calc
+      - libreoffice-draw
+      - npm
+      - p7zip
+      - syslinux
       - terminator
       - transmission
-      - libreoffice-base
-      - gparted
-      - icedtea-web
-      - npm
-      - libreoffice-draw.x86_64
+      - unzip
+      - wget
       - whois
-      - syslinux
+      - virt-manager
 # fpassword
       - xclip
 # VirtualBox
@@ -109,6 +118,8 @@
   loop:
    - org.videolan.VLC
    - com.spotify.Client
+   - com.slack.Slack
+   - rest.insomnia.Insomnia
 - name: Install rambox
   become: yes
   yum:
@@ -118,6 +129,11 @@
   become: yes
   yum:
     name: https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1-6.1.22_144080_el8-1.x86_64.rpm
+    disable_gpg_check: yes
+- name: Install TeamViewer
+  become: yes
+  yum:
+    name: https://download.teamviewer.com/download/linux/teamviewer.x86_64.rpm
     disable_gpg_check: yes
 - name: Create terminator conf dir
   file:
@@ -160,16 +176,16 @@
   loop:
 # fpasswd
     - name: 'pykeepass'
-      pip_executable: 'pip3'
+      pip_executable: 'pip3.9'
     - name: 'PyInquirer'
-      pip_executable: 'pip3'
+      pip_executable: 'pip3.9'
     - name: 'pyperclip'
-      pip_executable: 'pip3'
+      pip_executable: 'pip3.9'
     - name: 'termcolor'
-      pip_executable: 'pip3'
+      pip_executable: 'pip3.9'
 #  Fancy prompt
     - name: 'powerline-shell'
       pip_executable: 'pip3'
 # Custom python script
     - name: 'dnspython'
-      pip_executable: 'pip3'
+      pip_executable: 'pip3.9'
